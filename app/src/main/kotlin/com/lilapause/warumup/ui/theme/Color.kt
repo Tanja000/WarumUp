@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.ui.theme
+﻿package com.lilapause.warumup.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

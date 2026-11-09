@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.data
+﻿package com.lilapause.warumup.data
 
 import kotlin.math.atan2
 import kotlin.math.cos
@@ -49,15 +49,6 @@ enum class SpotCategory(
     colorHex = 0xFF0284C7.toInt(),
     isIndoor = true,
   ),
-  CHRISTMAS_MARKET(
-    titleDe = "Weihnachtsmarkt & Glühwein",
-    titleEn = "Christmas Market & Winter Fair",
-    subtitleDe = "Dampfender Glühwein, Punsch & Marktzauber",
-    subtitleEn = "Mulled wine, hot punch & festive treats",
-    osmRuleDescription = "market:type=christmas / amenity=marketplace",
-    colorHex = 0xFFDC2626.toInt(),
-    isIndoor = false,
-  ),
   FIREPLACE_RESTAURANT(
     titleDe = "Kaminfeuer & Gemütliches Lokal",
     titleEn = "Fireplace Inn & Cozy Eatery",
@@ -101,42 +92,6 @@ enum class SpotCategory(
     subtitleEn = "Heated indoor promenade, malls & covered hall",
     osmRuleDescription = "shop=mall / amenity=marketplace (covered)",
     colorHex = 0xFFDB2777.toInt(),
-    isIndoor = true,
-  ),
-  ICE_RINK(
-    titleDe = "Eislaufbahn & Eissporthalle",
-    titleEn = "Ice Rink & Skating",
-    subtitleDe = "Schlittschuhlaufen mit warmem Aufenthaltsraum",
-    subtitleEn = "Ice skating fun with heated lounge",
-    osmRuleDescription = "leisure=ice_rink",
-    colorHex = 0xFF06B6D4.toInt(),
-    isIndoor = false,
-  ),
-  INDOOR_PLAYGROUND(
-    titleDe = "Indoor-Freizeit & Sport",
-    titleEn = "Indoor Fun & Sports",
-    subtitleDe = "Indoorspielplatz, Kletterhalle, Bowling & Billard",
-    subtitleEn = "Indoor playgrounds, climbing gyms, bowling & active fun",
-    osmRuleDescription = "leisure=indoor_play / sport=climbing / leisure=bowling_alley",
-    colorHex = 0xFFE11D48.toInt(),
-    isIndoor = true,
-  ),
-  WARM_CHURCH(
-    titleDe = "Kirche & Andachtsort",
-    titleEn = "Church & Peaceful Sanctuary",
-    subtitleDe = "Windgeschützter, stiller Ort zum Innehalten",
-    subtitleEn = "Wind-sheltered peaceful space to rest",
-    osmRuleDescription = "amenity=place_of_worship",
-    colorHex = 0xFF78350F.toInt(),
-    isIndoor = true,
-  ),
-  WARMING_SHELTER(
-    titleDe = "Wärmestube & Warteraum",
-    titleEn = "Warming Room & Heated Shelter",
-    subtitleDe = "Öffentliche Wärmestube oder geschützter Warteraum",
-    subtitleEn = "Public warming shelter or cozy waiting room",
-    osmRuleDescription = "amenity=shelter / amenity=waiting_room",
-    colorHex = 0xFFF59E0B.toInt(),
     isIndoor = true,
   );
 

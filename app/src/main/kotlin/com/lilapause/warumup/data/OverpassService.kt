@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.data
+﻿package com.lilapause.warumup.data
 
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -404,18 +404,7 @@ class OverpassService {
       )
     }
 
-    // 4. CHRISTMAS MARKETS
-    listOf("Weihnachtsmarkt", "Christkindlmarkt", "Wintermarkt", "Adventmarkt", "Glühwein").forEach { kw ->
-      val enc = URLEncoder.encode(kw, "UTF-8")
-      tasks.add(
-        PhotonTask(
-          url = "https://photon.komoot.io/api/?q=$enc&bbox=$photonBbox&limit=30&lang=de",
-          fallbackCategory = SpotCategory.CHRISTMAS_MARKET,
-        )
-      )
-    }
-
-    // 5. FIREPLACE / COZY RESTAURANTS
+    // 4. FIREPLACE / COZY RESTAURANTS
     tileCenters.take(3).forEach { (tLat, tLon) ->
       tasks.add(
         PhotonTask(
@@ -436,7 +425,7 @@ class OverpassService {
       )
     }
 
-    // 6. LIBRARIES & BOOKSHOPS
+    // 5. LIBRARIES & BOOKSHOPS
     tasks.add(
       PhotonTask(
         url = "https://photon.komoot.io/reverse?lon=$centerLon&lat=$centerLat&radius=$radiusKm&limit=40" +
@@ -454,7 +443,7 @@ class OverpassService {
       )
     }
 
-    // 7. MUSEUMS & EXHIBITIONS
+    // 6. MUSEUMS & EXHIBITIONS
     tasks.add(
       PhotonTask(
         url = "https://photon.komoot.io/reverse?lon=$centerLon&lat=$centerLat&radius=$radiusKm&limit=50" +
@@ -472,7 +461,7 @@ class OverpassService {
       )
     }
 
-    // 8. CINEMA & THEATER (Warm cultural retreats)
+    // 7. CINEMA & THEATER (Warm cultural retreats)
     tileCenters.take(3).forEach { (tLat, tLon) ->
       tasks.add(
         PhotonTask(
@@ -493,7 +482,7 @@ class OverpassService {
       )
     }
 
-    // 9. SHOPPING MALLS / PASSAGES
+    // 8. SHOPPING MALLS / PASSAGES
     tasks.add(
       PhotonTask(
         url = "https://photon.komoot.io/reverse?lon=$centerLon&lat=$centerLat&radius=$radiusKm&limit=30" +
@@ -507,49 +496,6 @@ class OverpassService {
         PhotonTask(
           url = "https://photon.komoot.io/api/?q=$enc&bbox=$photonBbox&limit=25&lang=de&osm_tag=shop:mall",
           fallbackCategory = SpotCategory.INDOOR_SHOPPING_PASSAGE,
-        )
-      )
-    }
-
-    // 10. ICE RINKS
-    listOf("Eislaufbahn", "Eissporthalle", "Schlittschuh", "Eishalle").forEach { kw ->
-      val enc = URLEncoder.encode(kw, "UTF-8")
-      tasks.add(
-        PhotonTask(
-          url = "https://photon.komoot.io/api/?q=$enc&bbox=$photonBbox&limit=25&lang=de&osm_tag=leisure:ice_rink",
-          fallbackCategory = SpotCategory.ICE_RINK,
-        )
-      )
-    }
-
-    // 11. INDOOR PLAYGROUND / CLIMBING / BOWLING
-    listOf("Indoorspielplatz", "Kletterhalle", "Boulderhalle", "Bowling").forEach { kw ->
-      val enc = URLEncoder.encode(kw, "UTF-8")
-      tasks.add(
-        PhotonTask(
-          url = "https://photon.komoot.io/api/?q=$enc&bbox=$photonBbox&limit=25&lang=de" +
-            "&osm_tag=leisure:indoor_play&osm_tag=sport:climbing&osm_tag=leisure:bowling_alley",
-          fallbackCategory = SpotCategory.INDOOR_PLAYGROUND,
-        )
-      )
-    }
-
-    // 12. CHURCHES
-    tasks.add(
-      PhotonTask(
-        url = "https://photon.komoot.io/reverse?lon=$centerLon&lat=$centerLat&radius=$radiusKm&limit=30" +
-          "&osm_tag=amenity:place_of_worship",
-        fallbackCategory = SpotCategory.WARM_CHURCH,
-      )
-    )
-
-    // 13. WARMING SHELTERS
-    listOf("Wärmestube", "Warteraum").forEach { kw ->
-      val enc = URLEncoder.encode(kw, "UTF-8")
-      tasks.add(
-        PhotonTask(
-          url = "https://photon.komoot.io/api/?q=$enc&bbox=$photonBbox&limit=20&lang=de",
-          fallbackCategory = SpotCategory.WARMING_SHELTER,
         )
       )
     }
@@ -654,7 +600,7 @@ class OverpassService {
       "cafe" to SpotCategory.CAFE_HOT_DRINKS,
       "sauna" to SpotCategory.THERMAL_BATH_SAUNA,
       "museum" to SpotCategory.MUSEUM_EXHIBITION,
-      "weihnachtsmarkt" to SpotCategory.CHRISTMAS_MARKET,
+      "kino" to SpotCategory.CINEMA_THEATER,
       "bibliothek" to SpotCategory.LIBRARY_READING,
     ).flatMap { (q, cat) ->
       try {
@@ -714,12 +660,6 @@ class OverpassService {
         way["shop"="books"]($box);
         node["shop"="mall"]($box);
         way["shop"="mall"]($box);
-        node["leisure"="ice_rink"]($box);
-        way["leisure"="ice_rink"]($box);
-        node["leisure"="indoor_play"]($box);
-        way["leisure"="indoor_play"]($box);
-        node["amenity"="place_of_worship"]($box);
-        way["amenity"="place_of_worship"]($box);
       );
       out center 150;
     """.trimIndent()
@@ -846,12 +786,6 @@ class OverpassService {
       return SpotCategory.THERMAL_BATH_SAUNA
     }
 
-    if (marketType == "christmas" || temporary == "christmas_market" || tags["xmas:feature"] == "market" ||
-        name.contains("weihnachtsmarkt") || name.contains("christkindlmarkt") || name.contains("wintermarkt") ||
-        name.contains("adventmarkt") || name.contains("glühwein")) {
-      return SpotCategory.CHRISTMAS_MARKET
-    }
-
     val isFreibad = (tags["outdoor"] == "yes" || name.contains("freibad") || name.contains("strandbad") || name.contains("badesee")) &&
       tags["indoor"] != "yes" && tags["covered"] != "yes" && !name.contains("hallenbad") && !name.contains("therme") && !name.contains("erlebnisbad")
     if (isFreibad) return null
@@ -887,16 +821,6 @@ class OverpassService {
       return SpotCategory.CINEMA_THEATER
     }
 
-    if (leisure == "ice_rink" || name.contains("eislauf") || name.contains("schlittschuh") || name.contains("eissporthalle") || name.contains("eishalle")) {
-      return SpotCategory.ICE_RINK
-    }
-
-    if (leisure == "indoor_play" || tags["playground"] == "indoor" || sport == "climbing" || leisure == "bowling_alley" ||
-        sport == "bowling" || sport == "billiards" || name.contains("indoorspielplatz") || name.contains("kletterhalle") ||
-        name.contains("boulderhalle") || name.contains("bowling") || name.contains("billard")) {
-      return SpotCategory.INDOOR_PLAYGROUND
-    }
-
     if (amenity == "library" || shop == "books" || name.contains("bibliothek") || name.contains("bücherei") ||
         name.contains("buchhandlung") || name.contains("thalia") || name.contains("hugendubel") || name.contains("lesesaal")) {
       return SpotCategory.LIBRARY_READING
@@ -913,15 +837,6 @@ class OverpassService {
       return SpotCategory.INDOOR_SHOPPING_PASSAGE
     }
 
-    if (amenity == "waiting_room" || (amenity == "shelter" && (tags["heating"] == "yes" || tags["fireplace"] == "yes")) ||
-        amenity == "social_facility" || name.contains("wärmestube") || name.contains("warteraum") || name.contains("kältebus")) {
-      return SpotCategory.WARMING_SHELTER
-    }
-
-    if (amenity == "place_of_worship" || building == "church" || building == "cathedral") {
-      return SpotCategory.WARM_CHURCH
-    }
-
     return null
   }
 
@@ -929,26 +844,19 @@ class OverpassService {
     SpotCategory.CAFE_HOT_DRINKS -> "Café / Bäckerei"
     SpotCategory.THERMAL_BATH_SAUNA -> "Therme / Sauna"
     SpotCategory.INDOOR_POOL -> "Hallenbad & Erlebnisbad"
-    SpotCategory.CHRISTMAS_MARKET -> "Weihnachtsmarkt"
     SpotCategory.FIREPLACE_RESTAURANT -> "Lokal mit Kaminfeuer"
     SpotCategory.CINEMA_THEATER -> "Kino / Theater"
     SpotCategory.LIBRARY_READING -> "Bibliothek / Buchhandlung"
     SpotCategory.MUSEUM_EXHIBITION -> "Museum / Ausstellung"
     SpotCategory.INDOOR_SHOPPING_PASSAGE -> "Einkaufspassage"
-    SpotCategory.ICE_RINK -> "Eislaufbahn"
-    SpotCategory.INDOOR_PLAYGROUND -> "Indoor-Freizeit / Klettern"
-    SpotCategory.WARM_CHURCH -> "Kirche / Andachtsort"
-    SpotCategory.WARMING_SHELTER -> "Wärmestube / Warteraum"
   }
 
   private fun buildSpotDescription(category: SpotCategory, tags: Map<String, String>): String? {
     val parts = mutableListOf<String>()
     if (tags["fireplace"] == "yes") parts.add("Kaminfeuer vorhanden")
-    if (tags["heating"] == "yes") parts.add("Beheizter Innenraum")
     tags["cuisine"]?.let { parts.add("Küche: $it") }
     tags["coffee"]?.let { parts.add("Kaffeespezialitäten") }
     tags["tea"]?.let { parts.add("Teeauswahl") }
-    tags["indoor"]?.let { if (it == "yes") parts.add("Überdacht & beheizt") }
     tags["sauna"]?.let { parts.add("Saunabereich") }
     tags["admission"]?.let { parts.add("Eintritt: $it") }
     return if (parts.isNotEmpty()) parts.joinToString(" • ") else null

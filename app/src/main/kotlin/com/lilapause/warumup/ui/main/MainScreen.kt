@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.ui.main
+package com.lilapause.warumup.ui.main
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -128,12 +128,12 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.NavKey
-import com.findwarmplaceswithwarmup.data.AppLanguage
-import com.findwarmplaceswithwarmup.data.BoundingBoxCoords
-import com.findwarmplaceswithwarmup.data.RouteInfo
-import com.findwarmplaceswithwarmup.data.SpotCategory
-import com.findwarmplaceswithwarmup.data.TravelMode
-import com.findwarmplaceswithwarmup.data.WarmSpot
+import com.lilapause.warumup.data.AppLanguage
+import com.lilapause.warumup.data.BoundingBoxCoords
+import com.lilapause.warumup.data.RouteInfo
+import com.lilapause.warumup.data.SpotCategory
+import com.lilapause.warumup.data.TravelMode
+import com.lilapause.warumup.data.WarmSpot
 import java.io.File
 import org.osmdroid.config.Configuration
 import org.osmdroid.events.MapEventsReceiver
@@ -784,48 +784,77 @@ fun WarmUpMapScreen(
           )
         }
 
-        // 4. "Orte" & "Route" Buttons (Bottom Left / links unten nebeneinander)
-        Row(
+        // 4. "Orte" & "Route" Buttons (Bottom Left / schmale Pills direkt am unteren Rand)
+        androidx.compose.animation.AnimatedVisibility(
+          visible = uiState.selectedSpot == null,
+          enter = fadeIn() + slideInVertically { it / 2 },
+          exit = fadeOut() + slideOutVertically { it / 2 },
           modifier = Modifier
             .align(Alignment.BottomStart)
-            .navigationBarsPadding()
-            .padding(
-              start = 14.dp,
-              bottom = if (uiState.selectedSpot != null) 270.dp else 16.dp,
+            .then(
+              if (uiState.isFullScreenMap) Modifier.navigationBarsPadding().padding(start = 12.dp, bottom = 8.dp)
+              else Modifier.padding(start = 12.dp, bottom = 8.dp)
             ),
-          horizontalArrangement = Arrangement.spacedBy(10.dp),
-          verticalAlignment = Alignment.CenterVertically,
         ) {
-          // Orte Button
-          ExtendedFloatingActionButton(
-            onClick = { viewModel.setSpotListSheetVisible(true) },
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.primary,
-            elevation = androidx.compose.material3.FloatingActionButtonDefaults.elevation(defaultElevation = 6.dp),
-            icon = { Icon(Icons.Default.FilterList, contentDescription = null) },
-            text = {
-              Text(
-                "${uiState.filteredSpots.size} " + if (isEn) "Spots" else "Orte",
-                fontWeight = FontWeight.Bold,
-              )
-            },
-          )
-
-          // Route Button (directly next to Orte)
-          if (uiState.activeRoute != null) {
-            ExtendedFloatingActionButton(
-              onClick = { viewModel.focusActiveRoute() },
-              containerColor = MaterialTheme.colorScheme.primary,
-              contentColor = MaterialTheme.colorScheme.onPrimary,
-              elevation = androidx.compose.material3.FloatingActionButtonDefaults.elevation(defaultElevation = 6.dp),
-              icon = { Icon(Icons.Default.Route, contentDescription = null) },
-              text = {
+          Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically,
+          ) {
+            // Orte Pill Button
+            Surface(
+              onClick = { viewModel.setSpotListSheetVisible(true) },
+              shape = RoundedCornerShape(20.dp),
+              color = MaterialTheme.colorScheme.surface,
+              contentColor = MaterialTheme.colorScheme.primary,
+              shadowElevation = 3.dp,
+              tonalElevation = 2.dp,
+            ) {
+              Row(
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 7.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+              ) {
+                Icon(
+                  imageVector = Icons.Default.FilterList,
+                  contentDescription = null,
+                  modifier = Modifier.size(17.dp),
+                )
                 Text(
-                  if (isEn) "Route" else "Route",
+                  text = "${uiState.filteredSpots.size} " + if (isEn) "Spots" else "Orte",
+                  style = MaterialTheme.typography.labelLarge,
                   fontWeight = FontWeight.Bold,
                 )
-              },
-            )
+              }
+            }
+
+            // Route Pill Button (direkt neben Orte)
+            if (uiState.activeRoute != null) {
+              Surface(
+                onClick = { viewModel.focusActiveRoute() },
+                shape = RoundedCornerShape(20.dp),
+                color = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                shadowElevation = 3.dp,
+                tonalElevation = 2.dp,
+              ) {
+                Row(
+                  modifier = Modifier.padding(horizontal = 12.dp, vertical = 7.dp),
+                  verticalAlignment = Alignment.CenterVertically,
+                  horizontalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                  Icon(
+                    imageVector = Icons.Default.Route,
+                    contentDescription = null,
+                    modifier = Modifier.size(17.dp),
+                  )
+                  Text(
+                    text = if (isEn) "Route" else "Route",
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold,
+                  )
+                }
+              }
+            }
           }
         }
 
@@ -833,12 +862,11 @@ fun WarmUpMapScreen(
         Column(
           modifier = Modifier
             .align(Alignment.BottomEnd)
-            .navigationBarsPadding()
-            .padding(
-              end = 14.dp,
-              bottom = if (uiState.selectedSpot != null) 270.dp else 16.dp,
+            .then(
+              if (uiState.isFullScreenMap) Modifier.navigationBarsPadding().padding(end = 12.dp, bottom = if (uiState.selectedSpot != null) 210.dp else 8.dp)
+              else Modifier.padding(end = 12.dp, bottom = if (uiState.selectedSpot != null) 210.dp else 8.dp)
             ),
-          verticalArrangement = Arrangement.spacedBy(10.dp),
+          verticalArrangement = Arrangement.spacedBy(8.dp),
           horizontalAlignment = Alignment.End,
         ) {
           // Vollansicht (Fullscreen toggle)
@@ -846,16 +874,18 @@ fun WarmUpMapScreen(
             onClick = { viewModel.toggleFullScreenMap() },
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = MaterialTheme.colorScheme.primary,
-            elevation = androidx.compose.material3.FloatingActionButtonDefaults.elevation(defaultElevation = 5.dp),
+            elevation = androidx.compose.material3.FloatingActionButtonDefaults.elevation(defaultElevation = 4.dp),
+            modifier = Modifier.size(38.dp),
           ) {
             Icon(
               imageVector = if (uiState.isFullScreenMap) Icons.Default.FullscreenExit else Icons.Default.Fullscreen,
               contentDescription = "Vollansicht umschalten",
+              modifier = Modifier.size(19.dp),
             )
           }
 
           // GPS / Mein Standort
-          FloatingActionButton(
+          SmallFloatingActionButton(
             onClick = {
               val uLat = uiState.userLat
               val uLon = uiState.userLon
@@ -869,13 +899,14 @@ fun WarmUpMapScreen(
             },
             containerColor = MaterialTheme.colorScheme.primaryContainer,
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            elevation = androidx.compose.material3.FloatingActionButtonDefaults.elevation(defaultElevation = 6.dp),
+            elevation = androidx.compose.material3.FloatingActionButtonDefaults.elevation(defaultElevation = 4.dp),
+            modifier = Modifier.size(42.dp),
           ) {
-            Icon(Icons.Default.MyLocation, contentDescription = "Mein Standort")
+            Icon(Icons.Default.MyLocation, contentDescription = "Mein Standort", modifier = Modifier.size(20.dp))
           }
         }
 
-        // Bottom Selected Spot Card (Lifted above Android system navigation bar)
+        // Bottom Selected Spot Card
         androidx.compose.animation.AnimatedVisibility(
           visible = uiState.selectedSpot != null,
           enter = slideInVertically(initialOffsetY = { it }) + fadeIn(),
@@ -883,8 +914,10 @@ fun WarmUpMapScreen(
           modifier = Modifier
             .fillMaxWidth()
             .align(Alignment.BottomCenter)
-            .navigationBarsPadding()
-            .padding(horizontal = 12.dp, vertical = 20.dp),
+            .then(
+              if (uiState.isFullScreenMap) Modifier.navigationBarsPadding().padding(horizontal = 10.dp, vertical = 6.dp)
+              else Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
+            ),
         ) {
           uiState.selectedSpot?.let { spot ->
             WarmSpotDetailCard(
@@ -993,26 +1026,42 @@ fun WarmUpMapScreen(
       )
     }
 
-    // Route Overview Sheet
+    // Route Overview Sheet (Bottom Sheet Layout)
     val currentRoute = uiState.activeRoute
     if (uiState.showRouteOverviewSheet && currentRoute != null) {
-      RouteOverviewSheet(
-        route = currentRoute,
-        selectedTravelMode = uiState.selectedTravelMode,
-        isCalculatingRoute = uiState.isCalculatingRoute,
-        language = uiState.language,
-        onTravelModeChange = { mode ->
-          viewModel.changeTravelMode(mode)
-        },
-        onRemoveStop = { spotId -> viewModel.removeStopFromRoute(spotId) },
-        onClearRoute = { viewModel.clearRoute() },
-        onFocusRoute = { viewModel.focusActiveRoute() },
-        onSpotClick = { spot ->
-          viewModel.selectSpot(spot)
-          mapViewRef?.controller?.animateTo(GeoPoint(spot.lat, spot.lon), 16.5, 600L)
-        },
-        onClose = { viewModel.setRouteOverviewSheetVisible(false) },
-      )
+      Box(
+        modifier = Modifier
+          .fillMaxSize()
+          .background(Color.Black.copy(alpha = 0.45f))
+          .clickable { viewModel.setRouteOverviewSheetVisible(false) },
+        contentAlignment = Alignment.BottomCenter,
+      ) {
+        Box(
+          modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = false) {}
+            .then(if (uiState.isFullScreenMap) Modifier.navigationBarsPadding() else Modifier)
+            .padding(bottom = 6.dp)
+        ) {
+          RouteOverviewSheet(
+            route = currentRoute,
+            selectedTravelMode = uiState.selectedTravelMode,
+            isCalculatingRoute = uiState.isCalculatingRoute,
+            language = uiState.language,
+            onTravelModeChange = { mode ->
+              viewModel.changeTravelMode(mode)
+            },
+            onRemoveStop = { spotId -> viewModel.removeStopFromRoute(spotId) },
+            onClearRoute = { viewModel.clearRoute() },
+            onFocusRoute = { viewModel.focusActiveRoute() },
+            onSpotClick = { spot ->
+              viewModel.selectSpot(spot)
+              mapViewRef?.controller?.animateTo(GeoPoint(spot.lat, spot.lon), 16.5, 600L)
+            },
+            onClose = { viewModel.setRouteOverviewSheetVisible(false) },
+          )
+        }
+      }
     }
 
     // Spot List Bottom Sheet
@@ -1134,9 +1183,6 @@ private fun WarmSpotDetailCard(
       ) {
         if (spot.hasFireplace) {
           FeatureBadge(text = if (isEn) "🔥 Fireplace" else "🔥 Kaminfeuer", color = Color(0xFFD97706))
-        }
-        if (spot.category.isIndoor) {
-          FeatureBadge(text = if (isEn) "🏠 Heated Indoor" else "🏠 Beheizter Innenraum", color = Color(0xFF059669))
         }
         if (spot.wheelchair == "yes") {
           FeatureBadge(text = if (isEn) "♿ Wheelchair" else "♿ Barrierefrei", color = Color(0xFF0284C7))
@@ -1576,7 +1622,7 @@ private fun CategoryLegendDialog(
     title = {
       Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
         Icon(Icons.Default.Info, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
-        Text(if (isEn) "Winter Categories" else "Winter-Kategorien", fontWeight = FontWeight.Bold)
+        Text(if (isEn) "Info & Categories" else "Info & Winter-Kategorien", fontWeight = FontWeight.Bold)
       }
     },
     text = {
@@ -1586,6 +1632,13 @@ private fun CategoryLegendDialog(
           .verticalScroll(scrollState),
         verticalArrangement = Arrangement.spacedBy(10.dp),
       ) {
+        Text(
+          text = if (isEn) "Cozy Warm Categories:" else "Gemütliche Winter-Kategorien:",
+          fontWeight = FontWeight.Bold,
+          fontSize = 13.sp,
+          color = MaterialTheme.colorScheme.primary,
+        )
+
         SpotCategory.entries.forEach { cat ->
           Row(
             modifier = Modifier.fillMaxWidth(),
@@ -1610,6 +1663,43 @@ private fun CategoryLegendDialog(
               Text(cat.title(lang), fontWeight = FontWeight.Bold, fontSize = 12.5.sp)
               Text(cat.subtitle(lang), fontSize = 11.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
+          }
+        }
+
+        HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+
+        Text(
+          text = if (isEn) "Data Sources & Licenses:" else "Verwendete Datenquellen & Lizenzen:",
+          fontWeight = FontWeight.Bold,
+          fontSize = 13.sp,
+          color = MaterialTheme.colorScheme.primary,
+        )
+
+        Surface(
+          shape = RoundedCornerShape(10.dp),
+          color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f),
+          modifier = Modifier.fillMaxWidth(),
+        ) {
+          Column(
+            modifier = Modifier.padding(10.dp),
+            verticalArrangement = Arrangement.spacedBy(6.dp),
+          ) {
+            Text(
+              text = if (isEn) {
+                "• OpenStreetMap (OSM): Geodata & POIs (© OpenStreetMap contributors, ODbL license)\n" +
+                  "• Photon by Komoot: High-speed OpenStreetMap POI & Geocoding index\n" +
+                  "• OpenStreetMap Routing (OSRM): routing.openstreetmap.de for optimal foot, bicycle & car routing\n" +
+                  "• Map Tiles: OpenStreetMap Standard & CartoDB Positron / Dark / Voyager (© CARTO, © OpenStreetMap)"
+              } else {
+                "• OpenStreetMap (OSM): Geodaten & POIs (© OpenStreetMap-Mitwirkende, ODbL Lizenz)\n" +
+                  "• Photon by Komoot: Schneller OpenStreetMap POI- & Geocoding-Index\n" +
+                  "• OpenStreetMap Routing (OSRM): routing.openstreetmap.de für optimale Fuß-, Fahrrad- & Autonavigation\n" +
+                  "• Kartenkacheln: OpenStreetMap Standard & CartoDB Positron / Dark / Voyager (© CARTO, © OpenStreetMap)"
+              },
+              fontSize = 11.sp,
+              lineHeight = 15.sp,
+              color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
           }
         }
       }
@@ -1665,16 +1755,11 @@ fun SpotCategory.iconVector(): ImageVector = when (this) {
   SpotCategory.CAFE_HOT_DRINKS -> Icons.Default.Coffee
   SpotCategory.THERMAL_BATH_SAUNA -> Icons.Default.HotTub
   SpotCategory.INDOOR_POOL -> Icons.Default.Pool
-  SpotCategory.CHRISTMAS_MARKET -> Icons.Default.AcUnit
   SpotCategory.FIREPLACE_RESTAURANT -> Icons.Default.LocalFireDepartment
   SpotCategory.CINEMA_THEATER -> Icons.Default.Theaters
   SpotCategory.LIBRARY_READING -> Icons.Default.LocalLibrary
   SpotCategory.MUSEUM_EXHIBITION -> Icons.Default.AccountBalance
   SpotCategory.INDOOR_SHOPPING_PASSAGE -> Icons.Default.ShoppingBag
-  SpotCategory.ICE_RINK -> Icons.Default.AcUnit
-  SpotCategory.INDOOR_PLAYGROUND -> Icons.Default.SportsHandball
-  SpotCategory.WARM_CHURCH -> Icons.Default.Church
-  SpotCategory.WARMING_SHELTER -> Icons.Default.Home
 }
 
 private sealed interface MapRenderItem {

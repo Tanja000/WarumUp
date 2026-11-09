@@ -1,17 +1,17 @@
-package com.findwarmplaceswithwarmup.ui.main
+﻿package com.lilapause.warumup.ui.main
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.findwarmplaceswithwarmup.data.AppLanguage
-import com.findwarmplaceswithwarmup.data.BoundingBoxCoords
-import com.findwarmplaceswithwarmup.data.NominatimResult
-import com.findwarmplaceswithwarmup.data.OverpassService
-import com.findwarmplaceswithwarmup.data.RouteInfo
-import com.findwarmplaceswithwarmup.data.SpotCategory
-import com.findwarmplaceswithwarmup.data.TravelMode
-import com.findwarmplaceswithwarmup.data.WarmSpot
-import com.findwarmplaceswithwarmup.data.WarmSpotCacheManager
+import com.lilapause.warumup.data.AppLanguage
+import com.lilapause.warumup.data.BoundingBoxCoords
+import com.lilapause.warumup.data.NominatimResult
+import com.lilapause.warumup.data.OverpassService
+import com.lilapause.warumup.data.RouteInfo
+import com.lilapause.warumup.data.SpotCategory
+import com.lilapause.warumup.data.TravelMode
+import com.lilapause.warumup.data.WarmSpot
+import com.lilapause.warumup.data.WarmSpotCacheManager
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow

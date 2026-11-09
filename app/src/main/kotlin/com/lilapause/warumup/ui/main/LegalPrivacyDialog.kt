@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.ui.main
+package com.lilapause.warumup.ui.main
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.findwarmplaceswithwarmup.data.AppLanguage
+import com.lilapause.warumup.data.AppLanguage
 
 @Composable
 fun GdprConsentBanner(
@@ -94,9 +94,9 @@ fun GdprConsentBanner(
 
       Text(
         text = if (isEn) {
-          "WarmUp uses OpenStreetMap to display cozy winter spots, saunas, cafés and heated indoor locations. To keep the app free, we display Google AdMob banners. You can decide whether you want personalized or non-personalized ads."
+          "WarmUp uses OpenStreetMap to display cozy winter spots, saunas, cafés, cinemas and museums. To keep the app free, we display Google AdMob banners. You can decide whether you want personalized or non-personalized ads."
         } else {
-          "WarmUp nutzt OpenStreetMap für die Anzeige gemütlicher Orte, Saunen, Cafés und beheizter Aufenthaltsräume. Zur kostenlosen Bereitstellung zeigen wir Banner von Google AdMob. Wähle deine Werbepräferenz:"
+          "WarmUp nutzt OpenStreetMap für die Anzeige gemütlicher Cafés, Saunen, Thermen, Kinos und Museen. Zur kostenlosen Bereitstellung zeigen wir Banner von Google AdMob. Wähle deine Werbepräferenz:"
         },
         fontSize = 13.sp,
         lineHeight = 18.sp,
@@ -238,9 +238,9 @@ fun LegalPrivacyDialog(
           )
           Text(
             text = if (isEn) {
-              "Map data and points of interest are powered by OpenStreetMap contributors (ODbL). Routing is calculated via OSRM. Geocoding via Nominatim & Photon."
+              "Map data and points of interest are powered by OpenStreetMap contributors (ODbL). Routing is calculated via OpenStreetMap Routing Service (OSRM). POI search & geocoding via Photon (Komoot) & Nominatim. Map tiles by OpenStreetMap & CartoDB."
             } else {
-              "Kartendaten und POIs stammen von OpenStreetMap (© OpenStreetMap-Mitwirkende, ODbL). Routen werden via OSRM berechnet. Adresssuche via Nominatim / Photon."
+              "Kartendaten und POIs stammen von OpenStreetMap (© OpenStreetMap-Mitwirkende, ODbL). Routenberechnung via OpenStreetMap Routing Service (OSRM). POI-Suche & Geocoding via Photon (Komoot) & Nominatim. Kartenkacheln von OpenStreetMap & CartoDB."
             },
             fontSize = 12.sp,
             lineHeight = 17.sp,
@@ -256,9 +256,9 @@ fun LegalPrivacyDialog(
           )
           Text(
             text = if (isEn) {
-              "Tanja Reize\nWilhelm-Busch Str. 41\n81477 München\nGermany\n\nEmail: tanjareize@web.de\nPackage ID: com.findwarmplaceswithwarmup\nApp Version 1.0 (Winter Edition)"
+              "Tanja Reize\nWilhelm-Busch Str. 41\n81477 München\nGermany\n\nEmail: tanjareize@web.de\nPackage ID: com.lilapause.warumup\nApp Version 1.0 (Winter Edition)"
             } else {
-              "Tanja Reize\nWilhelm-Busch Str. 41\n81477 München\nDeutschland\n\nE-Mail: tanjareize@web.de\nPaketname: com.findwarmplaceswithwarmup\nApp Version 1.0 (Winter Edition)"
+              "Tanja Reize\nWilhelm-Busch Str. 41\n81477 München\nDeutschland\n\nE-Mail: tanjareize@web.de\nPaketname: com.lilapause.warumup\nApp Version 1.0 (Winter Edition)"
             },
             fontSize = 12.sp,
             lineHeight = 17.sp,

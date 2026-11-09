@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.ui.main
+﻿package com.lilapause.warumup.ui.main
 
 import android.content.Context
 import android.graphics.Bitmap
@@ -8,7 +8,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
-import com.findwarmplaceswithwarmup.data.SpotCategory
+import com.lilapause.warumup.data.SpotCategory
 
 object MarkerIconFactory {
   private val cache = mutableMapOf<Pair<SpotCategory, Boolean>, Drawable>()
@@ -205,16 +205,6 @@ object MarkerIconFactory {
         canvas.drawLine(cx - radius * 0.8f, cy - radius * 0.2f, cx + radius * 0.8f, cy - radius * 0.2f, paint)
         canvas.drawLine(cx - radius * 0.6f, cy + radius * 0.4f, cx + radius * 0.6f, cy + radius * 0.4f, paint)
       }
-      SpotCategory.CHRISTMAS_MARKET -> {
-        // Festive star / tree
-        val treePath = Path().apply {
-          moveTo(cx, cy - radius)
-          lineTo(cx + radius * 0.8f, cy + radius * 0.8f)
-          lineTo(cx - radius * 0.8f, cy + radius * 0.8f)
-          close()
-        }
-        canvas.drawPath(treePath, paint)
-      }
       SpotCategory.LIBRARY_READING -> {
         // Open book
         paint.style = Paint.Style.STROKE
@@ -251,43 +241,6 @@ object MarkerIconFactory {
         paint.style = Paint.Style.STROKE
         canvas.drawRect(cx - radius * 0.7f, cy - radius * 0.2f, cx + radius * 0.7f, cy + radius * 0.8f, paint)
         canvas.drawArc(cx - radius * 0.4f, cy - radius * 0.8f, cx + radius * 0.4f, cy, 180f, 180f, false, paint)
-      }
-      SpotCategory.ICE_RINK -> {
-        // Skate / snowflake dot
-        paint.style = Paint.Style.STROKE
-        canvas.drawLine(cx - radius * 0.8f, cy, cx + radius * 0.8f, cy, paint)
-        canvas.drawLine(cx, cy - radius * 0.8f, cx, cy + radius * 0.8f, paint)
-        canvas.drawLine(cx - radius * 0.6f, cy - radius * 0.6f, cx + radius * 0.6f, cy + radius * 0.6f, paint)
-        canvas.drawLine(cx + radius * 0.6f, cy - radius * 0.6f, cx - radius * 0.6f, cy + radius * 0.6f, paint)
-      }
-      SpotCategory.INDOOR_PLAYGROUND -> {
-        // Joy / play circle & dot
-        canvas.drawCircle(cx, cy - radius * 0.4f, radius * 0.35f, paint)
-        val body = Path().apply {
-          moveTo(cx - radius * 0.6f, cy + radius * 0.8f)
-          lineTo(cx, cy)
-          lineTo(cx + radius * 0.6f, cy + radius * 0.8f)
-        }
-        paint.style = Paint.Style.STROKE
-        canvas.drawPath(body, paint)
-      }
-      SpotCategory.WARM_CHURCH -> {
-        // Cross
-        paint.style = Paint.Style.STROKE
-        canvas.drawLine(cx, cy - radius * 0.9f, cx, cy + radius * 0.9f, paint)
-        canvas.drawLine(cx - radius * 0.6f, cy - radius * 0.3f, cx + radius * 0.6f, cy - radius * 0.3f, paint)
-      }
-      SpotCategory.WARMING_SHELTER -> {
-        // Roof / home
-        val home = Path().apply {
-          moveTo(cx, cy - radius * 0.9f)
-          lineTo(cx + radius * 0.8f, cy - radius * 0.1f)
-          lineTo(cx + radius * 0.6f, cy + radius * 0.8f)
-          lineTo(cx - radius * 0.6f, cy + radius * 0.8f)
-          lineTo(cx - radius * 0.8f, cy - radius * 0.1f)
-          close()
-        }
-        canvas.drawPath(home, paint)
       }
     }
   }

@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.ui.main
+﻿package com.lilapause.warumup.ui.main
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
@@ -46,7 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.findwarmplaceswithwarmup.data.AppLanguage
+import com.lilapause.warumup.data.AppLanguage
 
 @Composable
 fun OnboardingIntroDialog(

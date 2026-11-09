@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup
+﻿package com.lilapause.warumup
 
 import androidx.navigation3.runtime.NavKey
 import kotlinx.serialization.Serializable

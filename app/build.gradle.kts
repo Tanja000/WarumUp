@@ -5,10 +5,10 @@ plugins {
 }
 
 android {
-  namespace = "com.findwarmplaceswithwarmup"
+  namespace = "com.lilapause.warumup"
   compileSdk = 36
   defaultConfig {
-    applicationId = "com.findwarmplaceswithwarmup"
+    applicationId = "com.lilapause.warumup"
     minSdk = 24
     targetSdk = 36
     versionCode = 1

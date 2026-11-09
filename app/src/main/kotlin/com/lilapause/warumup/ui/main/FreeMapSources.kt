@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.ui.main
+﻿package com.lilapause.warumup.ui.main
 
 import org.osmdroid.tileprovider.tilesource.OnlineTileSourceBase
 import org.osmdroid.tileprovider.tilesource.XYTileSource

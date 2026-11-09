@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.ui.main
+﻿package com.lilapause.warumup.ui.main
 
 import android.app.Activity
 import android.content.Context
@@ -37,8 +37,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.findwarmplaceswithwarmup.data.AppLanguage
-import com.findwarmplaceswithwarmup.data.MonetizationConfig
+import com.lilapause.warumup.data.AppLanguage
+import com.lilapause.warumup.data.MonetizationConfig
 import com.google.ads.mediation.admob.AdMobAdapter
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener

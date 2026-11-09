@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.data
+﻿package com.lilapause.warumup.data
 
 /**
  * Zentrale Konfiguration für Werbung (Google AdMob) und Unterstützung (Google Play Billing).

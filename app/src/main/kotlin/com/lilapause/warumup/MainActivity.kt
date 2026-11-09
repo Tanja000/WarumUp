@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup
+﻿package com.lilapause.warumup
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.findwarmplaceswithwarmup.ui.theme.WarmUpTheme
+import com.lilapause.warumup.ui.theme.WarmUpTheme
 import com.google.android.gms.ads.MobileAds
 
 class MainActivity : ComponentActivity() {

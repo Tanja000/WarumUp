@@ -1,4 +1,4 @@
-package com.findwarmplaceswithwarmup.ui.main
+﻿package com.lilapause.warumup.ui.main
 
 import android.app.Activity
 import android.widget.Toast
@@ -49,9 +49,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.findwarmplaceswithwarmup.data.AppLanguage
-import com.findwarmplaceswithwarmup.data.GooglePlayBillingManager
-import com.findwarmplaceswithwarmup.data.MonetizationConfig
+import com.lilapause.warumup.data.AppLanguage
+import com.lilapause.warumup.data.GooglePlayBillingManager
+import com.lilapause.warumup.data.MonetizationConfig
 
 @Composable
 fun HotDrinkSupportDialog(
